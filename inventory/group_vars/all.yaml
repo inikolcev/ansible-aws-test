@@ -1,0 +1,4 @@
+---
+
+ansible_python_interpreter: /home/inikolcev/proba/aws-ansible/venv/bin/python
+ansible_ssh_user: ec2-user

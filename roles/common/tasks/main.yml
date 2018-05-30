@@ -1,0 +1,24 @@
+---
+# tasks file for common
+- name: Add Epel Repo
+  yum_repository:
+    name: epel
+    description:  Epel YUM Repo
+    baseurl:  https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+
+- name: Add personal user
+  user: 
+    name: inikolcev
+    comment: "Ivan Nikolchev"
+    groups: wheel
+    append: yes
+    shell: /bin/bash
+
+- name:
+  user:
+    name: emgradm
+    comment: "Emergency admin"
+    groups: wheel
+    append: yes
+    shell: /bin/bash
+    password: "$6$me9dAWZCw6uJnjct$.QmzS/j0gsekCCR8WLdkt2o74sM5WmuNEilb.SjU9V3I3ajhu2cYND5YA8.1OtFJKOAAkspg3yZs09UIUt/8I/"
