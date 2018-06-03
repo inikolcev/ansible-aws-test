@@ -1,2 +1,4 @@
 venv/
 ansible.cfg
+*.retry
+roles/databaseuri/*

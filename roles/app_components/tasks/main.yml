@@ -1,0 +1,33 @@
+---
+# tasks file for app_components
+- name: install mariadb repo
+  yum_repository:
+    name: mariadb_repo
+    description:  Mariadb Repository
+    baseurl: http://yum.mariadb.org/10.3/centos6-amd64
+    gpgkey: https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+    gpgcheck: yes
+
+- name: install needed packages
+  yum:
+    name: "{{ item }}"
+    state:  present
+    skip_broken:  yes
+  with_items:
+    - git
+    - openssl-devel
+    - python36
+    - python36-devel
+    - python36-pip 
+    - MariaDB-*
+    - "@Development tools"
+
+- name: clone repo
+  git:
+    repo: 'https://github.com/inikolcev/simple-rest-api.git'
+    dest: /app
+
+- name: install requirements
+  pip:
+    requirements: /app/requirements.txt  
+    executable: pip-3.6

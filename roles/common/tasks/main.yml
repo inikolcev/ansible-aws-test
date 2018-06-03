@@ -1,11 +1,8 @@
 ---
 # tasks file for common
 - name: Add Epel Repo
-  yum_repository:
-    name: epel
-    description:  Epel YUM Repo
-    baseurl:  https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
-
+  yum:  name=epel-release state=latest
+  
 - name: Add personal user
   user: 
     name: inikolcev

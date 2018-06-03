@@ -1,0 +1,48 @@
+---
+- hosts: localhost
+  gather_facts: false
+
+  tasks:
+  - name: provision ec2 in us-west-2b
+    ec2:
+      region: us-west-2
+      key_name: privateserver01
+      instance_type: t2.micro
+      image: ami-e251209a
+      wait: yes
+      group:  lab-webservers01
+      vpc_subnet_id:  subnet-231fc55a
+      instance_tags:
+        Name: webserver{{ item }}
+        Group:  webservers
+    with_sequence:  start=1 end=2
+    register: ec2b
+
+  - name: provision ec2 in us-west-2a
+    ec2:
+      region: us-west-2
+      key_name: privateserver01
+      instance_type: t2.micro
+      image: ami-e251209a
+      wait: yes
+      group:  lab-webservers01
+      vpc_subnet_id:  subnet-0485414f
+      instance_tags:
+        Name: webserver{{ item }}
+        Group:  webservers
+    with_sequence:  start=3 end=4
+    register: ec2a
+
+
+  - name: create classic elb
+    ec2_elb_lb:
+      name: api-load-balancer
+      state:  present
+      region: us-west-2
+      subnets:
+        - subnet-5878bd13
+        - subnet-b519c3cc
+      listeners:
+        - protocol: http
+          load_balancer_port: 80
+          instance_port:  80

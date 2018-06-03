@@ -1,0 +1,10 @@
+---
+# tasks file for patching
+- name: Patching RHEL systems
+  yum:  name=*  state=latest
+
+- name: rebooting servers
+  shell: sleep 2 && shutdown -r now
+  async:  1
+  poll: 0
+  ignore_errors:  true

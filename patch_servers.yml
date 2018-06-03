@@ -1,8 +1,5 @@
----
 - hosts:  tag_Group_webservers
   become: yes
   gather_facts: False
   roles:
-    - common
-    - app_components
-    - databaseuri
+    - patching
